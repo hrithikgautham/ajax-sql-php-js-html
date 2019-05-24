@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX2</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<button id = "btn1">User</button>
+	<button id = "btn2">Users</button>
+	<h1>user</h1>
+	<div id = "user"></div>
+	<h1>users</h1>
+	<div id = "users"></div>
+	
+	<script>
+		//event listener for btn1
+		document.getElementById("btn1").addEventListener('click', getUser)
+
+		//event listener for btn2
+		document.getElementById('btn2').addEventListener('click', getUsers)
+
+		//callback for btn2
+		function getUsers(event){
+			let xhr = new XMLHttpRequest()
+			xhr.open("GET", "./users.json", true)
+			xhr.onload = function(){
+				if(this.status == 200){
+					let text = JSON.parse(this.responseText)
+					let users = "<ul>"
+					text.forEach(user => users += "<li>"+user.name+"</li><li>"+user.company+"</li><li>"+user.hasBrain+"</li>")
+					user += "</ul>"
+					document.getElementById("users").innerHTML = users;
+				}
+			}
+			xhr.send()
+		}
+
+		//callback for btn1
+		function getUser(event){
+			let xhr = new XMLHttpRequest()
+			xhr.open("GET", "./user.json", true)
+			xhr.onload = function(){
+				if(this.status == 200){
+					let text = JSON.parse(this.responseText)
+					let user = "<ul>";
+					user += "<li>Name : "+text.name+"</li>"
+					user += "<li>Age : "+text.age+"</li>"
+					user += "<li>Company : "+text.company+"</li></ul>"
+
+					document.getElementById("user").innerHTML = user;
+				}
+			}
+			xhr.send()
+		}	
+	</script>
+</body>
+</html>

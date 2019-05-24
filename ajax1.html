@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax</title>
+	<meta charset = "utf-8">
+</head>
+<body>
+	<button id = "btn">submit</button>
+	<div id = "div"></div>
+	<script>
+		document.querySelector("#btn").addEventListener('click', handleClick)
+
+		function handleClick(e){
+			let xhr = new XMLHttpRequest();
+			// console.log("READYSTATE before open : ", xhr.readyState)
+			// console.log(xhr)
+			xhr.open("GET", "sample.txt", true)
+			// console.log("READYSTATE after open() : ", xhr.readyState)
+			
+			//using onreadystatechange
+			/*xhr.onreadystatechange = function(){
+				console.log("READYSTATE : inside orsc", xhr.readyState)
+				if(this.status == 200 && this.readyState == 4){
+					console.log(this.responseText)
+				}
+			}*/
+
+			//onprogress
+			xhr.onprogress = function(){
+				console.log(this.readyState)
+			}
+
+			//using onload
+			xhr.onload = function(){//not run until readyState == 4
+				// console.log("READYSTATE : inside orsc", xhr.readyState)
+				let div = document.getElementById("div").innerHTML = "<h1>" + this.responseText + "</h1>"
+				if(this.status == 200){
+					div.innerHTML = "<h1>" + this.responseText + "</h1>"
+				}else if(this.status == 404){
+					div.innerHTML = "<h1>404 Not found</h1>"
+				}
+			}
+
+			//onerror
+			xhr.onerror = function(err){
+				console.log("request error ", err);
+			}
+
+			// console.log("READYSTATE : before send", xhr.readyState)
+			xhr.send();
+			// console.log("READYSTATE : after send", xhr.readyState)
+		}
+	</script>
+</body>
+</html>

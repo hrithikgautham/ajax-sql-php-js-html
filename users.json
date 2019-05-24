@@ -1,0 +1,22 @@
+[
+	{
+		"name" : "hritik",
+		"company" : "Amazon",
+		"hasBrain" : true
+	},
+	{
+		"name" : "mayank",
+		"company" : "Flipkart",
+		"hasBrain" : true
+	},
+	{
+		"name" : "Nikhil",
+		"company" : "Cisco",
+		"hasBrain" : true
+	},
+	{
+		"name" : "Ganesh",
+		"company" : "GE",
+		"hasBrain" : true
+	}
+]

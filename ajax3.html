@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax3</title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			background-color : #ddd;
+		}
+		#github {
+			display : grid;
+			grid-template-columns : repeat(5, 1fr);
+			/*grid-gap : 10 5;*/
+		}
+		.user img {
+			padding-top : 10px;
+			width : 100px;
+			height : 100px;
+			position : relative;
+			left : 50%;
+			transform : translateX(-50%);
+		}
+		.user {
+			/*position : relative;*/
+			background-color : #aaa;
+			border : black 2px solid;
+		}
+		.user ul {
+			display : flex;
+			flex-direction : column;
+			justify-content : center;
+			align-items : flex-start;
+		}
+		.user ul li {
+			color : white;
+			font-family : arial;
+			font-style : italic;
+			text-align : center;
+			list-style-type : decimal;
+		}
+	</style>
+</head>
+<body>
+	<button id = "btn">getUsers</button>
+	<br>
+	<h1 style = "display : none;">Requested Users are : </h1>
+	<div id = "github"></div>
+
+	<script>
+		//https://api.github.com/users
+		document.getElementById("btn").addEventListener("click", getUsers)
+		
+		function getUsers(event){
+			let xhr = new XMLHttpRequest()
+			xhr.open("GET", "https://api.github.com/users", true)
+			xhr.onload = function(){
+				if(this.status == 200){
+					let users = JSON.parse(this.responseText)
+					var output = "";
+					for(let i in users){
+						output += `<div class = 'user'>
+						<img src = ${users[i].avatar_url}/>
+						<ul>
+						<li>Id : ${users[i].id}</li>
+						<li>Login : ${users[i].login}</li>
+						</ul>
+						</div>`
+					}
+					document.getElementsByTagName("h1")[0].style.display = "block"
+					document.getElementById("github").innerHTML = output
+				}
+			}
+			xhr.send()
+		}
+	</script>
+</body>
+</html>

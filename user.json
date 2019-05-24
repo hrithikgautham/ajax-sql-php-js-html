@@ -1,0 +1,8 @@
+{
+	"name" : "shreya",
+	"age" : 34,
+	"isHot" : true,
+	"hasCar" : true,
+	"hasNull" : null,
+	"company" : "Asian Paints"
+}
