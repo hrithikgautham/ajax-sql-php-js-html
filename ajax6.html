@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX6 UPDATE SQL</title>
+	<meta charset="utf-8">
+	<style>
+		#main {
+			display : none;
+		}
+	</style>
+</head>
+<body>
+	<h1>update or delete user</h1>
+	<form>
+		<label>Enter : <input type = "text" id = "inp" placeholder = "Enter Name"></label>
+		<p>
+			<input type = "submit" id = "update" value = "Update">
+			<input type = "submit" id = "delete" value = "Delete">
+		</p>
+		<div id = "main">
+			<lable>New Value : <input type = "text" placeholder = "new value" id = "newVal"></lable>
+			<p>
+				<input type = "button" value = "Submit" id = "final">
+			</p>
+		</div>
+	</form>
+	<script>
+		document.getElementById("update").addEventListener("click", handleDisplay)
+		// document.getElementById("delete").addEventListener("click", handleDelete)
+
+		function handleUpdate(e){
+			let name = document.getElementById("inp").value
+			let newVal = document.getElementById("newVal").value
+			console.log(name, newVal)
+			let xhr = new XMLHttpRequest()
+			xhr.open("GET", "update.php?name="+name+"&newvalue"+newVal, true)
+			xhr.onload = function(){
+				if(this.status == 200){
+					console.log("updated : ", this.responseText)
+				}
+			}
+			xhr.send()
+		}
+
+		//make div visible if update clicked
+		function handleDisplay(e){
+			e.preventDefault();
+			var decision = e.target.value
+			document.getElementById("main").style.display = "block";
+			document.getElementById("final").addEventListener("click", handleUpdate)
+		}
+	</script>
+</body>
+</html>

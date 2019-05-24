@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PHP</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<button id = "btn">GetName</button>
+	<br>
+	<h1>Normal PHP Form GET</h1>
+	<form method = "GET" action = "sql.php">
+		<input name = "name" type = "text">
+		<input name = "get-submit" type = "submit" value = "submit">
+	</form>
+	<!-- you could notice that 
+	php forms refreshes or reloads oho file every time we make a submit -->
+	<br><br>
+	<h1>AJAX PHP Form GET</h1>
+	<form  id = "getForm">
+		<input name = "name1" type = "text">
+		<input name = "submit" type = "submit" value = "submit">
+	</form>
+	<br><br>
+	<h1>Normal PHP Form POST</h1>
+	<form method = "POST" action = "sql.php">
+		<input name = "post-name" type = "text">
+		<input name = "post-submit" type = "submit" value = "submit">
+	</form>
+	<br><br>
+	<h1>AJAX PHP Form POST</h1>
+	<form  id = "postForm">
+		<input name = "name1" type = "text">
+		<input name = "submit" type = "submit" value = "submit">
+	</form>
+	<script>
+		document.getElementById("btn").addEventListener("click", getName)
+
+		document.getElementById("getForm").addEventListener("submit", getName)
+
+		document.getElementById("postForm").addEventListener("submit", postName)
+
+		function postName(e){
+			e.preventDefault()
+			let xhr = new XMLHttpRequest()
+			let name = e.target.elements.name1.value
+			let params = "name="+name
+			xhr.open("POST", "./sql.php", true)
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+			xhr.onload = function(){
+				if(this.status == 200){
+					console.log(this.responseText)
+				}
+			}
+			xhr.send(params)
+		}
+
+		// console.log(document.getElementById("postForm").elements.name2.value)
+		function getName(e){
+			e.preventDefault()
+			// console.log("clicked")
+			 
+			var name = e.target.elements.name1.value
+			console.log(name)
+			let xhr = new XMLHttpRequest()
+			xhr.open("GET", "./sql.php?name="+name, true)
+			xhr.onload = function(){
+				if(this.status == 200){
+					console.log(this.responseText)
+				}
+			}
+			xhr.send()
+		}
+	</script>
+</body>
+</html>

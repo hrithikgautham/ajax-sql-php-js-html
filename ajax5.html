@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX FETCH SQL</title>
+	<meta charset="utf-8">	
+</head>
+<body>
+	<h1>Users</h1>
+	<p>
+		<input typr = "text" id = "inp" placeholder = "enter name">
+	</p>
+	<button id = "btn">Get</button>
+	<div id = "root"></div>
+	<script>
+		document.getElementById("btn").addEventListener("click", getUsers)
+
+		function getUsers(e){
+			let xhr = new XMLHttpRequest()
+			var name = document.getElementById("inp").value
+			xhr.open("GET", "fetch.php?name="+name, true);
+			xhr.onload = function(){
+				if(this.status == 200){
+					let users = JSON.parse(this.responseText)
+					console.log(users)
+					let div = document.getElementById("root")
+					for(let i in users) {
+						let ul = document.createElement("ul")
+						let li1 = document.createElement("li")
+						let li2 = document.createElement("li")
+						let textNode1 = document.createTextNode(`Id : ${users[i].id}`)
+						let textNode2 = document.createTextNode(`Name : ${users[i].name}`)
+						li1.appendChild(textNode1)
+						li2.appendChild(textNode2)
+						ul.appendChild(li1)
+						ul.appendChild(li2)
+						div.appendChild(ul)
+					}
+				}
+			}
+			xhr.send()		
+		}
+	</script>
+</body>
+</html>
